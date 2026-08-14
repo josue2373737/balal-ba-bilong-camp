@@ -1,48 +1,41 @@
 import { useEffect, useState, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-import g1 from "@/assets/g1.jpg";
-import g2 from "@/assets/g2.jpg";
-import g3 from "@/assets/g3.jpg";
-import g4 from "@/assets/g4.jpg";
-import g5 from "@/assets/g5.jpg";
-import g6 from "@/assets/g6.jpg";
-import g7 from "@/assets/g7.jpg";
-import g8 from "@/assets/g8.jpg";
+import p1 from "@/assets/p1.jpg.asset.json";
+import p2 from "@/assets/p2.jpg.asset.json";
+import p3 from "@/assets/p3.jpg.asset.json";
+import p4 from "@/assets/p4.jpg.asset.json";
+import p5 from "@/assets/p5.jpg.asset.json";
+import p6 from "@/assets/p6.jpg.asset.json";
+import p7 from "@/assets/p7.jpg.asset.json";
+import p8 from "@/assets/p8.jpg.asset.json";
+import famille from "@/assets/famille.jpg.asset.json";
 
-type Photo = { src: string; alt: string; edition: "2024" | "2025" };
+type Photo = { src: string; alt: string };
 
 const photos: Photo[] = [
-  { src: g1, alt: "Étude de la Bible en petits groupes sous les arbres", edition: "2024" },
-  { src: g2, alt: "Chorale des jeunes en pleine louange", edition: "2025" },
-  { src: g3, alt: "Tournoi de football entre campeurs", edition: "2024" },
-  { src: g4, alt: "Moment de partage fraternel au coucher du soleil", edition: "2025" },
-  { src: g5, alt: "Repas communautaire partagé au camp", edition: "2024" },
-  { src: g6, alt: "Photo de groupe des participants du camp", edition: "2025" },
-  { src: g7, alt: "Veillée de témoignages autour du feu", edition: "2024" },
-  { src: g8, alt: "Enseignement biblique devant l'assemblée", edition: "2025" },
+  { src: famille.url, alt: "Photo de famille des participants du camp biblique" },
+  { src: p1.url, alt: "Remise de certificat à une participante" },
+  { src: p8.url, alt: "Mamans et enfants réunis dans la joie" },
+  { src: p4.url, alt: "Groupe de garçons en t-shirts « My heart Jesus »" },
+  { src: p7.url, alt: "Trois jeunes filles souriantes au camp" },
+  { src: p3.url, alt: "Remise de matériel à un jeune serviteur" },
+  { src: p5.url, alt: "Moment de danse et de louange en plein air" },
+  { src: p6.url, alt: "Encadreurs du camp avec un enfant" },
+  { src: p2.url, alt: "Un tout-petit joyeux pendant les ateliers" },
 ];
 
-const filters = [
-  { key: "all", label: "Toutes" },
-  { key: "2024", label: "Édition 2024" },
-  { key: "2025", label: "Édition 2025" },
-] as const;
-
 export function Gallery() {
-  const [filter, setFilter] = useState<(typeof filters)[number]["key"]>("all");
   const [index, setIndex] = useState<number | null>(null);
-
-  const visible = photos.filter((p) => filter === "all" || p.edition === filter);
 
   const close = useCallback(() => setIndex(null), []);
   const next = useCallback(
-    () => setIndex((i) => (i === null ? i : (i + 1) % visible.length)),
-    [visible.length],
+    () => setIndex((i) => (i === null ? i : (i + 1) % photos.length)),
+    [],
   );
   const prev = useCallback(
-    () => setIndex((i) => (i === null ? i : (i - 1 + visible.length) % visible.length)),
-    [visible.length],
+    () => setIndex((i) => (i === null ? i : (i - 1 + photos.length) % photos.length)),
+    [],
   );
 
   useEffect(() => {
@@ -65,33 +58,14 @@ export function Gallery() {
       <div className="mx-auto max-w-6xl px-6">
         <p className="font-display text-sm uppercase tracking-[0.3em] text-accent">Galerie</p>
         <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
-          Souvenirs des éditions passées
+          Souvenirs de l'édition précédente
         </h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Des instants de louange, d'amitié et de grâce, gardés précieusement.
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          {filters.map((f) => (
-            <button
-              key={f.key}
-              onClick={() => {
-                setFilter(f.key);
-                setIndex(null);
-              }}
-              className={`rounded-full border px-5 py-2 text-sm transition-colors ${
-                filter === f.key
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card text-muted-foreground hover:border-accent hover:text-foreground"
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-
         <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
-          {visible.map((p, i) => (
+          {photos.map((p, i) => (
             <button
               key={p.src}
               onClick={() => setIndex(i)}
@@ -108,7 +82,7 @@ export function Gallery() {
         </div>
       </div>
 
-      {index !== null && visible[index] && (
+      {index !== null && photos[index] && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4"
           onClick={close}
@@ -132,12 +106,12 @@ export function Gallery() {
           </button>
           <figure onClick={(e) => e.stopPropagation()} className="max-h-full">
             <img
-              src={visible[index].src}
-              alt={visible[index].alt}
+              src={photos[index].src}
+              alt={photos[index].alt}
               className="mx-auto max-h-[78vh] w-auto rounded-xl object-contain"
             />
             <figcaption className="mt-4 text-center text-sm text-background/70">
-              {visible[index].alt} — Édition {visible[index].edition} ({index + 1}/{visible.length})
+              {photos[index].alt} — Édition précédente ({index + 1}/{photos.length})
             </figcaption>
           </figure>
           <button
