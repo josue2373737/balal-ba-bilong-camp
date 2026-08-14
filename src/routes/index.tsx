@@ -138,7 +138,12 @@ function Index() {
       <footer className="bg-foreground py-16 text-background">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-3">
           <div>
-            <p className="font-display text-2xl">Mahol Ma Ndap</p>
+            <img
+              src={logoAsset.url}
+              alt="Logo Mahol Ma Ndap"
+              className="h-12 w-auto rounded-lg bg-background p-1.5"
+            />
+            <p className="mt-4 font-display text-2xl">Mahol Ma Ndap</p>
             <p className="mt-3 text-sm text-background/70">
               Organisateur du Camp Biblique Balal ba Bilong, au service de la jeunesse et de la
               communauté.
