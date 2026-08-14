@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 
 import { Gallery } from "@/components/Gallery";
-import hero from "@/assets/hero-camp.jpg";
+import heroAsset from "@/assets/famille.jpg.asset.json";
+import logoAsset from "@/assets/logo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,13 +50,14 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="relative flex min-h-[92vh] items-end overflow-hidden">
         <img
-          src={hero}
-          alt="Jeunes rassemblés en louange au camp biblique"
-          width={1920}
-          height={1280}
+          src={heroAsset.url}
+          alt="Photo de famille des participants du camp biblique Balal ba Bilong"
           className="absolute inset-0 size-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/55 to-foreground/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/92 via-foreground/60 to-foreground/35" />
+        <div className="absolute left-6 top-6 z-10 rounded-2xl bg-background/95 px-4 py-3 shadow-soft backdrop-blur">
+          <img src={logoAsset.url} alt="Logo Mahol Ma Ndap" className="h-10 w-auto sm:h-12" />
+        </div>
         <div className="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-32">
           <p className="font-display text-sm uppercase tracking-[0.35em] text-background/80">
             Organisé par Mahol Ma Ndap
@@ -136,7 +138,12 @@ function Index() {
       <footer className="bg-foreground py-16 text-background">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-3">
           <div>
-            <p className="font-display text-2xl">Mahol Ma Ndap</p>
+            <img
+              src={logoAsset.url}
+              alt="Logo Mahol Ma Ndap"
+              className="h-12 w-auto rounded-lg bg-background p-1.5"
+            />
+            <p className="mt-4 font-display text-2xl">Mahol Ma Ndap</p>
             <p className="mt-3 text-sm text-background/70">
               Organisateur du Camp Biblique Balal ba Bilong, au service de la jeunesse et de la
               communauté.
