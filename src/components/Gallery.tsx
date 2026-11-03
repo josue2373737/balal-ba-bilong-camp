@@ -1,5 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AddMemory } from "@/components/AddMemory";
+import { Button } from "@/components/ui/button";
+import { loadMemories } from "@/lib/memories";
 
 import p1 from "@/assets/p1.jpg.asset.json";
 import p2 from "@/assets/p2.jpg.asset.json";
@@ -11,7 +15,7 @@ import p7 from "@/assets/p7.jpg.asset.json";
 import p8 from "@/assets/p8.jpg.asset.json";
 import famille from "@/assets/famille.jpg.asset.json";
 
-type Photo = { src: string; alt: string };
+type Photo = { src: string; alt: string; edition?: string };
 
 const photos: Photo[] = [
   { src: famille.url, alt: "Photo de famille des participants du camp biblique" },
@@ -26,16 +30,21 @@ const photos: Photo[] = [
 ];
 
 export function Gallery() {
+  const queryClient = useQueryClient();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const memories = useQuery({ queryKey: ["camp-memories"], queryFn: loadMemories, enabled: hydrated, staleTime: 60 * 60 * 1000, refetchInterval: 60 * 60 * 1000 });
+  const allPhotos = [...(memories.data ?? []), ...photos];
   const [index, setIndex] = useState<number | null>(null);
 
   const close = useCallback(() => setIndex(null), []);
   const next = useCallback(
-    () => setIndex((i) => (i === null ? i : (i + 1) % photos.length)),
-    [],
+    () => setIndex((i) => (i === null ? i : (i + 1) % allPhotos.length)),
+    [allPhotos.length],
   );
   const prev = useCallback(
-    () => setIndex((i) => (i === null ? i : (i - 1 + photos.length) % photos.length)),
-    [],
+    () => setIndex((i) => (i === null ? i : (i - 1 + allPhotos.length) % allPhotos.length)),
+    [allPhotos.length],
   );
 
   useEffect(() => {
@@ -60,16 +69,22 @@ export function Gallery() {
         <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
           Souvenirs de l'édition précédente
         </h2>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
+        <div className="mt-4 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-2xl text-muted-foreground">
           Des instants de louange, d'amitié et de grâce, gardés précieusement.
         </p>
+        <AddMemory onShared={() => queryClient.invalidateQueries({ queryKey: ["camp-memories"] })} />
+        </div>
+        {memories.isError && <div role="alert" className="mt-5 flex flex-wrap items-center gap-3 text-sm text-destructive">Les souvenirs partagés n’ont pas pu être chargés.<Button variant="outline" onClick={() => memories.refetch()}>Réessayer</Button></div>}
 
         <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
-          {photos.map((p, i) => (
-            <button
+          {allPhotos.map((p, i) => (
+            <Button
+              variant="ghost"
               key={p.src}
               onClick={() => setIndex(i)}
-              className="group block w-full break-inside-avoid overflow-hidden rounded-2xl bg-card shadow-soft"
+              aria-label={p.alt}
+              className="group block h-auto w-full break-inside-avoid overflow-hidden rounded-2xl bg-card p-0 shadow-soft"
             >
               <img
                 src={p.src}
@@ -77,24 +92,24 @@ export function Gallery() {
                 loading="lazy"
                 className="w-full transition-transform duration-500 group-hover:scale-[1.04]"
               />
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
-      {index !== null && photos[index] && (
+      {index !== null && allPhotos[index] && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4"
           onClick={close}
         >
-          <button
+          <Button variant="ghost" size="icon"
             onClick={close}
             aria-label="Fermer"
             className="absolute right-5 top-5 rounded-full bg-background/10 p-3 text-background transition-colors hover:bg-background/20"
           >
             <X className="size-5" />
-          </button>
-          <button
+          </Button>
+          <Button variant="ghost" size="icon"
             onClick={(e) => {
               e.stopPropagation();
               prev();
@@ -103,18 +118,18 @@ export function Gallery() {
             className="absolute left-3 rounded-full bg-background/10 p-3 text-background transition-colors hover:bg-background/20 sm:left-8"
           >
             <ChevronLeft className="size-6" />
-          </button>
+          </Button>
           <figure onClick={(e) => e.stopPropagation()} className="max-h-full">
             <img
-              src={photos[index].src}
-              alt={photos[index].alt}
+              src={allPhotos[index].src}
+              alt={allPhotos[index].alt}
               className="mx-auto max-h-[78vh] w-auto rounded-xl object-contain"
             />
-            <figcaption className="mt-4 text-center text-sm text-background/70">
-              {photos[index].alt} — Édition précédente ({index + 1}/{photos.length})
+            <figcaption className="mx-auto mt-4 max-w-lg whitespace-normal break-words text-center text-sm text-background/70">
+              {allPhotos[index].alt} — {allPhotos[index].edition ?? "Édition précédente"} ({index + 1}/{allPhotos.length})
             </figcaption>
           </figure>
-          <button
+          <Button variant="ghost" size="icon"
             onClick={(e) => {
               e.stopPropagation();
               next();
@@ -123,7 +138,7 @@ export function Gallery() {
             className="absolute right-3 rounded-full bg-background/10 p-3 text-background transition-colors hover:bg-background/20 sm:right-8"
           >
             <ChevronRight className="size-6" />
-          </button>
+          </Button>
         </div>
       )}
     </section>
