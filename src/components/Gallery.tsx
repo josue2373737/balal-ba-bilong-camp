@@ -84,7 +84,7 @@ export function Gallery() {
               key={p.src}
               onClick={() => setIndex(i)}
               aria-label={p.alt}
-              className="group block h-auto w-full break-inside-avoid overflow-hidden rounded-2xl bg-card p-0 shadow-soft"
+              className="group block h-auto min-h-24 w-full break-inside-avoid overflow-hidden rounded-2xl bg-card p-0 shadow-soft"
             >
               <img
                 src={p.src}
