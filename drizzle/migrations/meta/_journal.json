@@ -22,6 +22,13 @@
       "when": 1793697323011,
       "tag": "0002_validate_storage_metadata_when_present",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793700974647,
+      "tag": "0003_memory_stories_and_interactions",
+      "breakpoints": true
     }
   ]
 }
