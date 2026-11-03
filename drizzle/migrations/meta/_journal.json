@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793697063615,
+      "tag": "0000_create_camp_memories",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793697269732,
+      "tag": "0001_allow_storage_upload_preflight",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793697323011,
+      "tag": "0002_validate_storage_metadata_when_present",
+      "breakpoints": true
+    }
+  ]
+}
