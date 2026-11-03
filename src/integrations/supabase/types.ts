@@ -16,22 +16,85 @@ export type Database = {
     Tables: {
       camp_memories: {
         Row: {
+          approximate_year: number | null
+          audio_path: string | null
           caption: string
           created_at: string
           id: string
           image_path: string
+          location: string
+          people: string
+          story: string
+          taken_on: string | null
         }
         Insert: {
+          approximate_year?: number | null
+          audio_path?: string | null
           caption?: string
           created_at?: string
           id?: string
           image_path: string
+          location?: string
+          people?: string
+          story?: string
+          taken_on?: string | null
         }
         Update: {
+          approximate_year?: number | null
+          audio_path?: string | null
           caption?: string
           created_at?: string
           id?: string
           image_path?: string
+          location?: string
+          people?: string
+          story?: string
+          taken_on?: string | null
+        }
+        Relationships: []
+      }
+      memory_comments: {
+        Row: {
+          author: string
+          body: string
+          created_at: string
+          id: string
+          photo_key: string
+        }
+        Insert: {
+          author?: string
+          body: string
+          created_at?: string
+          id?: string
+          photo_key: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          created_at?: string
+          id?: string
+          photo_key?: string
+        }
+        Relationships: []
+      }
+      memory_reactions: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          photo_key: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          photo_key: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          photo_key?: string
         }
         Relationships: []
       }
