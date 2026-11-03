@@ -1,19 +1,20 @@
-import { test, expect } from "bun:test";
+import { test } from "node:test";
+import assert from "node:assert/strict";
 import { validatePhoto, captionSchema } from "./memories";
 
 test("public contributions accept a JPEG without an account field", () => {
-  expect(validatePhoto({ type: "image/jpeg", size: 100 })).toBe("jpg");
+  assert.equal(validatePhoto({ type: "image/jpeg", size: 100 }), "jpg");
 });
 test("reject non-image uploads", () => {
-  expect(() => validatePhoto({ type: "image/svg+xml", size: 100 })).toThrow();
+  assert.throws(() => validatePhoto({ type: "image/svg+xml", size: 100 }));
 });
 test("accept 10 MiB and reject a larger photo", () => {
-  expect(validatePhoto({ type: "image/png", size: 10485760 })).toBe("png");
-  expect(() => validatePhoto({ type: "image/png", size: 10485761 })).toThrow();
+  assert.equal(validatePhoto({ type: "image/png", size: 10485760 }), "png");
+  assert.throws(() => validatePhoto({ type: "image/png", size: 10485761 }));
 });
 test("reject empty uploads", () => {
-  expect(() => validatePhoto({ type: "image/jpeg", size: 0 })).toThrow();
+  assert.throws(() => validatePhoto({ type: "image/jpeg", size: 0 }));
 });
 test("reject captions exceeding 200 characters", () => {
-  expect(captionSchema.safeParse("a".repeat(201)).success).toBe(false);
+  assert.equal(captionSchema.safeParse("a".repeat(201)).success, false);
 });
