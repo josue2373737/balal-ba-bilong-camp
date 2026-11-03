@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793697063615,
+      "tag": "0000_create_camp_memories",
+      "breakpoints": true
+    }
+  ]
 }
