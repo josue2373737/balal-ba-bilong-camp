@@ -8,6 +8,13 @@
       "when": 1793697063615,
       "tag": "0000_create_camp_memories",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793697269732,
+      "tag": "0001_allow_storage_upload_preflight",
+      "breakpoints": true
     }
   ]
 }
