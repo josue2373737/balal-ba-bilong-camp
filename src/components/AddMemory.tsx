@@ -53,7 +53,7 @@ export function AddMemory({ onShared }: { onShared: () => Promise<unknown> }) {
       rec.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
         setRecording(false);
-        const blob = new Blob(chunks, { type: (rec.mimeType || "audio/webm").split(";")[0] });
+        const blob = new Blob(chunks, { type: (rec.mimeType || "audio/webm").split(";")[0] ?? "audio/webm" });
         try { validateAudio(blob); setAudio(blob); } catch (e) { setError((e as Error).message); }
       };
       recorder.current = rec; rec.start(); setRecording(true);

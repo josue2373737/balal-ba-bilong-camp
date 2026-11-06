@@ -36,7 +36,7 @@ export function validatePhoto(file: { type: string; size: number }) {
 }
 
 export function validateAudio(file: { type: string; size: number }) {
-  const base = file.type.split(";")[0];
+  const base = file.type.split(";")[0] ?? "";
   const ext = audioExtensions[base];
   if (!ext) throw new Error("Format audio non pris en charge.");
   if (file.size === 0 || file.size > MAX_AUDIO_BYTES) throw new Error("La note vocale doit peser au maximum 10 Mo.");
@@ -73,7 +73,7 @@ export async function loadMemories(): Promise<Memory[]> {
   if (audioPaths.length) {
     const { data: a, error: ae } = await supabase.storage.from("camp-audio").createSignedUrls(audioPaths, 7200);
     if (ae) throw ae;
-    a.forEach((x, i) => x.signedUrl && audio.set(audioPaths[i], x.signedUrl));
+    a.forEach((x, i) => { const p = audioPaths[i]; if (x.signedUrl && p) audio.set(p, x.signedUrl); });
   }
   return rows.map((row, index) => {
     const url = data[index]?.signedUrl;
@@ -89,7 +89,7 @@ export async function loadMemories(): Promise<Memory[]> {
 export async function shareMemory(file: File, details: MemoryDetails, audio?: Blob | null) {
   const extension = validatePhoto(file);
   const parsed = detailsSchema.safeParse(details);
-  if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Données invalides.");
   const d = parsed.data;
   if (d.date && d.year) throw new Error("Indiquez soit une date précise, soit une année.");
   let audioPath: string | null = null;
@@ -125,7 +125,7 @@ export async function loadInteractions(key: string) {
 
 export async function addComment(key: string, input: { author: string; body: string }) {
   const parsed = commentSchema.safeParse(input);
-  if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Données invalides.");
   const { error } = await supabase.from("memory_comments").insert({ photo_key: key, ...parsed.data });
   if (error) throw new Error("Votre mot n’a pas pu être envoyé.");
 }
