@@ -59,16 +59,16 @@ export function Gallery() {
   const current = index !== null ? allPhotos[index] : undefined;
 
   return (
-    <section id="galerie" className="bg-secondary/40 py-24">
+    <section id="galerie" className="bg-secondary py-24">
       <div className="mx-auto max-w-6xl px-6">
         {featured && (
-          <div className="mb-16 grid items-center gap-6 overflow-hidden rounded-3xl border border-border bg-card shadow-soft md:grid-cols-2">
+          <div className="mb-16 grid items-center gap-6 overflow-hidden rounded-md rounded-tr-[3rem] border border-border bg-card shadow-soft md:grid-cols-2">
             <Button variant="ghost" className="h-auto rounded-none p-0" onClick={() => setIndex(allPhotos.indexOf(featured))} aria-label={`Ouvrir le souvenir du jour : ${featured.alt}`}>
               <img src={featured.src} alt={featured.alt} className="aspect-[4/3] w-full object-cover" />
             </Button>
             <div className="space-y-3 p-6 md:p-8">
-              <p className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-[0.3em] text-accent"><Sparkles className="size-4" /> Souvenir du jour</p>
-              <h3 className="font-display text-3xl text-foreground">{ago ? `Il y a ${ago} an${ago > 1 ? "s" : ""}…` : "Vous vous souvenez ?"}</h3>
+              <p className="inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1 text-sm font-semibold text-accent-foreground"><Sparkles className="size-4" /> Souvenir du jour</p>
+              <h3 className="text-3xl text-foreground">{ago ? `Il y a ${ago} an${ago > 1 ? "s" : ""}…` : "Vous vous souvenez ?"}</h3>
               <p className="text-muted-foreground">{featured.alt}</p>
               <MemoryDetailsView memory={featured} />
               <Button variant="outline" onClick={() => setIndex(allPhotos.indexOf(featured))}>Laisser un mot doux</Button>
@@ -76,10 +76,9 @@ export function Gallery() {
           </div>
         )}
 
-        <p className="font-display text-sm uppercase tracking-[0.3em] text-accent">Galerie</p>
-        <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">Souvenirs de l'édition précédente</h2>
+        <h2 className="text-4xl leading-[1.05] text-foreground sm:text-6xl">Souvenirs de l'édition précédente</h2>
         <div className="mt-4 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-2xl text-muted-foreground">Des instants de louange, d'amitié et de grâce, gardés précieusement.</p>
+          <p className="max-w-2xl text-lg text-foreground/80">Des instants de louange, d'amitié et de grâce, gardés précieusement.</p>
           <AddMemory onShared={() => queryClient.invalidateQueries({ queryKey: ["camp-memories"] })} />
         </div>
         {memories.isError && <div role="alert" className="mt-5 flex flex-wrap items-center gap-3 text-sm text-destructive">Les souvenirs partagés n’ont pas pu être chargés.<Button variant="outline" onClick={() => memories.refetch()}>Réessayer</Button></div>}
@@ -87,8 +86,8 @@ export function Gallery() {
         <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
           {allPhotos.map((p, i) => (
             <Button variant="ghost" key={p.key} onClick={() => setIndex(i)} aria-label={p.alt}
-              className="group block h-auto min-h-24 w-full break-inside-avoid overflow-hidden rounded-2xl bg-card p-0 shadow-soft">
-              <img src={p.src} alt={p.alt} loading="lazy" className="w-full transition-transform duration-500 group-hover:scale-[1.04]" />
+              className="group block h-auto min-h-24 w-full break-inside-avoid overflow-hidden rounded-md bg-card p-0 shadow-soft">
+              <img src={p.src} alt={p.alt} loading="lazy" className="w-full transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
             </Button>
           ))}
         </div>

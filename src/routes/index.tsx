@@ -48,94 +48,105 @@ const objectifs = [
 function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="relative flex min-h-[92vh] items-end overflow-hidden">
+      <header className="relative flex min-h-[92svh] items-end overflow-hidden">
         <img
           src={heroAsset.url}
           alt="Photo de famille des participants du camp biblique Balal ba Bilong"
           className="absolute inset-0 size-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/92 via-foreground/60 to-foreground/35" />
-        <div className="absolute left-6 top-6 z-10 rounded-2xl bg-background/95 px-4 py-3 shadow-soft backdrop-blur">
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/55 to-foreground/10" />
+        <div className="absolute left-6 top-6 z-10 rounded-xl bg-background px-4 py-3 shadow-soft">
           <img src={logoAsset.url} alt="Logo Mahol Ma Ndap" className="h-10 w-auto sm:h-12" />
         </div>
-        <div className="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-32">
-          <p className="font-display text-sm uppercase tracking-[0.35em] text-background/80">
-            Organisé par Mahol Ma Ndap
-          </p>
-          <h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1.05] text-background sm:text-7xl">
-            Camp Biblique
-            <span className="block italic text-background/90">Balal ba Bilong</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-background/85">
-            « Venez à l'écart et reposez-vous un peu. » Une semaine pour respirer, prier et grandir
-            ensemble dans la Parole.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-background/10 px-5 py-2.5 text-sm text-background backdrop-blur">
-              <CalendarDays className="size-4" /> Du 24 au 30 août
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-background/10 px-5 py-2.5 text-sm text-background backdrop-blur">
-              <MapPin className="size-4" /> Mbalmayo, quartier Obeck
-            </span>
+
+        <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-14 pt-32 lg:flex-row lg:items-end lg:justify-between lg:pb-20">
+          <div>
+            <h1 className="text-background">
+              <span className="block text-2xl font-semibold sm:text-3xl">Camp biblique</span>
+              <span className="mt-2 block animate-in fade-in slide-in-from-bottom-6 fill-mode-backwards text-[clamp(3.25rem,14vw,9.5rem)] font-extrabold leading-[0.9] duration-700 motion-reduce:animate-none">
+                Balal
+              </span>
+              <span className="block animate-in fade-in slide-in-from-bottom-6 fill-mode-backwards text-[clamp(3.25rem,14vw,9.5rem)] font-extrabold leading-[0.9] delay-150 duration-700 motion-reduce:animate-none">
+                ba Bilong
+              </span>
+            </h1>
+            <p className="mt-6 text-lg font-semibold text-accent">Organisé par Mahol Ma Ndap</p>
+            <p className="mt-3 max-w-md text-lg text-background/90">
+              « Venez à l'écart et reposez-vous un peu. » (Marc 6.31) Une semaine pour respirer,
+              prier et grandir ensemble dans la Parole.
+            </p>
+          </div>
+
+          <div className="w-full shrink-0 rounded-md rounded-tl-[2.5rem] bg-accent p-7 text-accent-foreground shadow-soft lg:w-80">
+            <p className="flex items-center gap-2 text-sm font-semibold">
+              <CalendarDays className="size-4" /> Prochaine édition
+            </p>
+            <p className="mt-2 font-display text-5xl font-extrabold leading-none tracking-tight">
+              24–30 août
+            </p>
+            <p className="mt-3 flex items-center gap-2 font-medium">
+              <MapPin className="size-4 shrink-0" /> Mbalmayo, quartier Obeck
+            </p>
             <a
               href="#galerie"
-              className="inline-flex items-center rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Découvrir le camp
+              Voir les souvenirs du camp
             </a>
           </div>
         </div>
       </header>
 
       <section className="mx-auto max-w-6xl px-6 py-24">
-        <p className="font-display text-sm uppercase tracking-[0.3em] text-accent">À propos</p>
-        <h2 className="mt-3 max-w-2xl font-display text-4xl text-foreground sm:text-5xl">
+        <h2 className="max-w-3xl text-4xl leading-[1.05] text-foreground sm:text-6xl">
           Un lieu de communion, de partage et d'édification
         </h2>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <article className="rounded-3xl border border-border bg-card p-8 shadow-soft">
-            <h3 className="font-display text-2xl text-foreground">Ce que c'est</h3>
-            <p className="mt-4 text-muted-foreground">
-              Balal ba Bilong est un rendez-vous annuel où enfants, jeunes et aînés se retrouvent
-              hors du quotidien. Pendant une semaine, on vit ensemble : louange au lever du jour,
-              enseignements, ateliers, jeux et veillées. Un esprit simple de communion, de partage
-              et d'édification spirituelle.
-            </p>
-          </article>
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-14">
+          <div className="space-y-10">
+            <article className="border-l-4 border-accent pl-6">
+              <h3 className="text-2xl text-foreground">Ce que c'est</h3>
+              <p className="mt-4 max-w-prose text-lg text-foreground/80">
+                Balal ba Bilong est un rendez-vous annuel où enfants, jeunes et aînés se retrouvent
+                hors du quotidien. Pendant une semaine, on vit ensemble : louange au lever du jour,
+                enseignements, ateliers, jeux et veillées. Un esprit simple de communion, de
+                partage et d'édification spirituelle.
+              </p>
+            </article>
 
-          <article className="rounded-3xl border border-border bg-card p-8 shadow-soft">
-            <h3 className="font-display text-2xl text-foreground">Ses objectifs</h3>
-            <ul className="mt-5 space-y-4">
+            <article className="rounded-md rounded-tr-[3rem] bg-primary p-8 text-primary-foreground sm:p-10">
+              <h3 className="text-2xl">Son rôle</h3>
+              <p className="mt-4 max-w-prose text-primary-foreground/90">
+                Le camp est un souffle pour la communauté : il accompagne spirituellement les
+                participants, révèle des dons, forme de nouveaux serviteurs et resserre les liens
+                entre familles et générations.
+              </p>
+              <p className="mt-4 max-w-prose text-primary-foreground/90">
+                Chacun repart affermi, avec des amitiés nouvelles et une foi vivante à partager
+                autour de lui.
+              </p>
+            </article>
+          </div>
+
+          <article className="self-start rounded-md rounded-bl-[3rem] border border-border bg-card p-8 shadow-soft">
+            <h3 className="text-2xl text-foreground">Ses objectifs</h3>
+            <ul className="mt-6 divide-y divide-border">
               {objectifs.map(({ icon: Icon, text }) => (
-                <li key={text} className="flex gap-3">
-                  <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-accent">
-                    <Icon className="size-4" />
+                <li key={text} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                    <Icon className="size-5" />
                   </span>
-                  <span className="text-muted-foreground">{text}</span>
+                  <span className="font-medium text-foreground">{text}</span>
                 </li>
               ))}
             </ul>
-          </article>
-
-          <article className="rounded-3xl border border-border bg-primary p-8 text-primary-foreground shadow-soft">
-            <h3 className="font-display text-2xl">Son rôle</h3>
-            <p className="mt-4 text-primary-foreground/85">
-              Le camp est un souffle pour la communauté : il accompagne spirituellement les
-              participants, révèle des dons, forme de nouveaux serviteurs et resserre les liens
-              entre familles et générations.
-            </p>
-            <p className="mt-4 text-primary-foreground/85">
-              Chacun repart affermi, avec des amitiés nouvelles et une foi vivante à partager autour
-              de lui.
-            </p>
           </article>
         </div>
       </section>
 
       <Gallery />
 
-      <footer className="bg-foreground py-16 text-background">
+      <footer className="border-t-4 border-accent bg-foreground py-16 text-background">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-3">
           <div>
             <img
@@ -143,15 +154,15 @@ function Index() {
               alt="Logo Mahol Ma Ndap"
               className="h-12 w-auto rounded-lg bg-background p-1.5"
             />
-            <p className="mt-4 font-display text-2xl">Mahol Ma Ndap</p>
-            <p className="mt-3 text-sm text-background/70">
+            <p className="mt-4 font-display text-2xl font-bold">Mahol Ma Ndap</p>
+            <p className="mt-3 text-sm text-background/75">
               Organisateur du Camp Biblique Balal ba Bilong, au service de la jeunesse et de la
               communauté.
             </p>
           </div>
           <div>
-            <p className="font-display text-lg">Contact</p>
-            <ul className="mt-3 space-y-2 text-sm text-background/70">
+            <p className="font-display text-lg font-semibold text-accent">Contact</p>
+            <ul className="mt-3 space-y-2 text-sm text-background/75">
               <li className="flex items-center gap-2">
                 <Phone className="size-4" /> +237 6 XX XX XX XX
               </li>
@@ -164,26 +175,26 @@ function Index() {
             </ul>
           </div>
           <div>
-            <p className="font-display text-lg">Nous suivre</p>
+            <p className="font-display text-lg font-semibold text-accent">Nous suivre</p>
             <div className="mt-3 flex gap-3">
               <a
                 href="#"
                 aria-label="Facebook"
-                className="rounded-full border border-background/20 p-3 transition-colors hover:bg-background/10"
+                className="rounded-full border border-background/25 p-3 transition-colors hover:bg-accent hover:text-accent-foreground"
               >
                 <Facebook className="size-4" />
               </a>
               <a
                 href="#"
                 aria-label="Instagram"
-                className="rounded-full border border-background/20 p-3 transition-colors hover:bg-background/10"
+                className="rounded-full border border-background/25 p-3 transition-colors hover:bg-accent hover:text-accent-foreground"
               >
                 <Instagram className="size-4" />
               </a>
             </div>
           </div>
         </div>
-        <p className="mx-auto mt-12 max-w-6xl px-6 text-xs text-background/50">
+        <p className="mx-auto mt-12 max-w-6xl px-6 text-xs text-background/60">
           © {new Date().getFullYear()} Mahol Ma Ndap — Camp Biblique Balal ba Bilong.
         </p>
       </footer>

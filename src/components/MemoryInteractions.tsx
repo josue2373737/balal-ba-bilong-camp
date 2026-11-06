@@ -44,7 +44,7 @@ export function MemoryInteractions({ memory }: { memory: Memory }) {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <Button variant="outline" size="sm" onClick={() => react("heart")} aria-label="Ajouter un cœur"><Heart className="text-accent" /> {q.data?.counts.heart ?? 0}</Button>
+        <Button variant="outline" size="sm" onClick={() => react("heart")} aria-label="Ajouter un cœur"><Heart className="text-destructive" /> {q.data?.counts.heart ?? 0}</Button>
         <Button variant="outline" size="sm" onClick={() => react("like")} aria-label="J’aime"><ThumbsUp className="text-primary" /> {q.data?.counts.like ?? 0}</Button>
       </div>
       {q.isError && <p role="alert" className="text-sm text-destructive">Les mots doux n’ont pas pu être chargés.</p>}
