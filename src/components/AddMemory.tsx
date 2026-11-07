@@ -6,10 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { shareMemory, validatePhoto, validateAudio } from "@/lib/memories";
+import { analyzeUploadedPhoto } from "@/lib/faces";
 
 const empty = { caption: "", date: "", year: "", location: "", people: "", story: "" };
 
-export function AddMemory({ onShared }: { onShared: () => Promise<unknown> }) {
+export function AddMemory({ onShared, onAnalyzed }: { onShared: () => Promise<unknown>; onAnalyzed?: () => void }) {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [form, setForm] = useState(empty);
@@ -64,7 +65,13 @@ export function AddMemory({ onShared }: { onShared: () => Promise<unknown> }) {
     event.preventDefault();
     if (!file || busy || recording) return;
     setBusy(true); setError("");
-    try { await shareMemory(file, form, audio); setSuccess(true); await onShared(); }
+    try {
+      const sent = file;
+      const path = await shareMemory(sent, form, audio);
+      setSuccess(true);
+      void analyzeUploadedPhoto(sent, path).then(() => onAnalyzed?.()).catch(() => { /* analyse facultative, relançable par l’admin */ });
+      await onShared();
+    }
     catch (err) { setError(err instanceof Error ? err.message : "L’envoi a échoué. Veuillez réessayer."); }
     finally { setBusy(false); }
   }
@@ -111,7 +118,7 @@ export function AddMemory({ onShared }: { onShared: () => Promise<unknown> }) {
                 <Button type="button" variant="outline" className="w-full" disabled={busy} onClick={startRecording}><Mic /> Enregistrer une note vocale</Button>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">Votre souvenir sera visible par tous. En le partageant, vous confirmez l’accord des personnes concernées.</p>
+            <p className="text-xs text-muted-foreground">Votre souvenir sera visible par tous. En le partageant, vous confirmez l’accord des personnes concernées. Si certaines ont créé leur album visage, la photo y sera rangée automatiquement.</p>
             {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
             <Button type="submit" className="w-full" disabled={!file || busy || recording}>{busy ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Send />}{busy ? "Envoi en cours…" : "Partager le souvenir"}</Button>
           </form>

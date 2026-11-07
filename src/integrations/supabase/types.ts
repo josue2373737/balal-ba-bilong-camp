@@ -103,7 +103,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_unanalyzed: { Args: { p_keys: string[] }; Returns: string[] }
+      delete_person: { Args: { p_id: string; p_token?: string }; Returns: boolean }
+      enroll_person: { Args: { p_samples: Json; p_token: string }; Returns: { person_id: string; existing: boolean }[] }
+      is_admin: { Args: never; Returns: boolean }
+      list_people: {
+        Args: never
+        Returns: { id: string; name: string | null; photo_count: number; cover_key: string | null; cover_x: number | null; cover_y: number | null; cover_w: number | null; cover_h: number | null }[]
+      }
+      person_photo_keys: { Args: { p_id: string }; Returns: string[] }
+      rename_person: { Args: { p_id: string; p_name: string }; Returns: boolean }
+      submit_photo_faces: { Args: { p_key: string; p_faces: Json }; Returns: number }
     }
     Enums: {
       [_ in never]: never

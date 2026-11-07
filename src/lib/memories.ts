@@ -86,7 +86,7 @@ export async function loadMemories(): Promise<Memory[]> {
   });
 }
 
-export async function shareMemory(file: File, details: MemoryDetails, audio?: Blob | null) {
+export async function shareMemory(file: File, details: MemoryDetails, audio?: Blob | null): Promise<string> {
   const extension = validatePhoto(file);
   const parsed = detailsSchema.safeParse(details);
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Données invalides.");
@@ -107,6 +107,7 @@ export async function shareMemory(file: File, details: MemoryDetails, audio?: Bl
     location: d.location, people: d.people, story: d.story, audio_path: audioPath,
   });
   if (error) throw new Error("La photo n’a pas pu être ajoutée à la galerie. Veuillez réessayer.");
+  return path;
 }
 
 export type Comment = { id: string; author: string; body: string; created_at: string };
