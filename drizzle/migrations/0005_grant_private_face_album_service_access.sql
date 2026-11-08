@@ -1,0 +1,2 @@
+GRANT ALL ON TABLE public.app_admins, public.face_people, public.person_descriptors, public.photo_faces, public.analyzed_photos, public.person_photos TO service_role;
+GRANT USAGE, SELECT ON SEQUENCE public.person_descriptors_id_seq, public.photo_faces_id_seq TO service_role;

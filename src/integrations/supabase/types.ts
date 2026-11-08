@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      analyzed_photos: {
+        Row: {
+          analyzed_at: string
+          photo_key: string
+        }
+        Insert: {
+          analyzed_at?: string
+          photo_key: string
+        }
+        Update: {
+          analyzed_at?: string
+          photo_key?: string
+        }
+        Relationships: []
+      }
+      app_admins: {
+        Row: {
+          user_id: string
+        }
+        Insert: {
+          user_id: string
+        }
+        Update: {
+          user_id?: string
+        }
+        Relationships: []
+      }
       camp_memories: {
         Row: {
           approximate_year: number | null
@@ -50,6 +77,27 @@ export type Database = {
           people?: string
           story?: string
           taken_on?: string | null
+        }
+        Relationships: []
+      }
+      face_people: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          token_hash: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          token_hash: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          token_hash?: string
         }
         Relationships: []
       }
@@ -98,22 +146,143 @@ export type Database = {
         }
         Relationships: []
       }
+      person_descriptors: {
+        Row: {
+          descriptor: number[]
+          id: number
+          person_id: string
+        }
+        Insert: {
+          descriptor: number[]
+          id?: number
+          person_id: string
+        }
+        Update: {
+          descriptor?: number[]
+          id?: number
+          person_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "person_descriptors_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "face_people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      person_photos: {
+        Row: {
+          distance: number
+          face_id: number
+          person_id: string
+          photo_key: string
+        }
+        Insert: {
+          distance: number
+          face_id: number
+          person_id: string
+          photo_key: string
+        }
+        Update: {
+          distance?: number
+          face_id?: number
+          person_id?: string
+          photo_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "person_photos_face_id_fkey"
+            columns: ["face_id"]
+            isOneToOne: false
+            referencedRelation: "photo_faces"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_photos_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "face_people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      photo_faces: {
+        Row: {
+          box_h: number
+          box_w: number
+          box_x: number
+          box_y: number
+          created_at: string
+          descriptor: number[]
+          id: number
+          photo_key: string
+        }
+        Insert: {
+          box_h: number
+          box_w: number
+          box_x: number
+          box_y: number
+          created_at?: string
+          descriptor: number[]
+          id?: number
+          photo_key: string
+        }
+        Update: {
+          box_h?: number
+          box_w?: number
+          box_x?: number
+          box_y?: number
+          created_at?: string
+          descriptor?: number[]
+          id?: number
+          photo_key?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       admin_unanalyzed: { Args: { p_keys: string[] }; Returns: string[] }
-      delete_person: { Args: { p_id: string; p_token?: string }; Returns: boolean }
-      enroll_person: { Args: { p_samples: Json; p_token: string }; Returns: { person_id: string; existing: boolean }[] }
+      delete_person: {
+        Args: { p_id: string; p_token?: string }
+        Returns: boolean
+      }
+      enroll_person: {
+        Args: { p_samples: Json; p_token: string }
+        Returns: {
+          existing: boolean
+          person_id: string
+        }[]
+      }
+      face_distance: { Args: { a: number[]; b: number[] }; Returns: number }
+      face_match_threshold: { Args: never; Returns: number }
       is_admin: { Args: never; Returns: boolean }
       list_people: {
         Args: never
-        Returns: { id: string; name: string | null; photo_count: number; cover_key: string | null; cover_x: number | null; cover_y: number | null; cover_w: number | null; cover_h: number | null }[]
+        Returns: {
+          cover_h: number
+          cover_key: string
+          cover_w: number
+          cover_x: number
+          cover_y: number
+          id: string
+          name: string
+          photo_count: number
+        }[]
       }
       person_photo_keys: { Args: { p_id: string }; Returns: string[] }
-      rename_person: { Args: { p_id: string; p_name: string }; Returns: boolean }
-      submit_photo_faces: { Args: { p_key: string; p_faces: Json }; Returns: number }
+      rename_person: {
+        Args: { p_id: string; p_name: string }
+        Returns: boolean
+      }
+      submit_photo_faces: {
+        Args: { p_faces: Json; p_key: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
