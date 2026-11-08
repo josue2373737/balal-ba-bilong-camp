@@ -5,8 +5,13 @@
 - [x] Ajouter les commentaires et réactions accessibles sans compte.
 - [x] Ajouter date ou année, lieu, personnes et anecdotes écrites ou vocales.
 - [x] Afficher un souvenir du jour et vérifier les échanges réels.
+
 ## Albums par visage
 - [x] Scanner son visage (selfie ou photo) pour créer son album, sans compte
 - [x] Photos rangées automatiquement dans l'album, à l'envoi et pour les photos existantes
 - [x] Nom de l'album donné par l'administrateur ; suppression de son album par la personne
 - [ ] À ajuster sur de vraies photos du camp : seuil de correspondance (`face_match_threshold()`)
+
+- [ ] Conserver les images fixes du site dans le code destiné à GitHub.
+- [x] Confirmer que les photos ajoutées par les visiteurs sont déjà conservées dans Lovable Cloud.
+
