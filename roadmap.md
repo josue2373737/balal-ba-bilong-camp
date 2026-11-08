@@ -6,5 +6,4 @@
 - [x] Ajouter date ou année, lieu, personnes et anecdotes écrites ou vocales.
 - [x] Afficher un souvenir du jour et vérifier les échanges réels.
 - [ ] Conserver les images fixes du site dans le code destiné à GitHub.
-- [ ] Transférer les photos initiales de la galerie vers Lovable Cloud sans perdre les interactions.
-- [ ] Vérifier les photos du site et la galerie après le transfert.
+- [x] Confirmer que les photos ajoutées par les visiteurs sont déjà conservées dans Lovable Cloud.
