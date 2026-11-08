@@ -29,6 +29,13 @@
       "when": 1793700974647,
       "tag": "0003_memory_stories_and_interactions",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794152415421,
+      "tag": "0004_face_albums",
+      "breakpoints": true
     }
   ]
 }
