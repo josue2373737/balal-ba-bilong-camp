@@ -163,11 +163,21 @@ function Index() {
           <div>
             <p className="font-display text-lg font-semibold text-accent">Contact</p>
             <ul className="mt-3 space-y-2 text-sm text-background/75">
-              <li className="flex items-center gap-2">
-                <Phone className="size-4" /> +237 6 XX XX XX XX
+              <li>
+                <a
+                  href="https://wa.me/237678672027"
+                  className="flex items-center gap-2 underline-offset-4 hover:text-background hover:underline"
+                >
+                  <Phone className="size-4" /> +237 6 78 67 20 27 (WhatsApp)
+                </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="size-4" /> contact@maholmandap.org
+              <li>
+                <a
+                  href="mailto:Maholmandap@gmail.com"
+                  className="flex items-center gap-2 underline-offset-4 hover:text-background hover:underline"
+                >
+                  <Mail className="size-4" /> Maholmandap@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="size-4" /> Mbalmayo, quartier Obeck
